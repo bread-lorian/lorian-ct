@@ -7,9 +7,9 @@ if sys.stderr.encoding != 'utf-8':
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # ======== 在这里填你的 API Key ========
-os.environ["API_KEY"] = "sk-cf8x6deoo7jej17d7asehhiq2qpqm37ilrvq9nztexpey4cp"
-os.environ["BASE_URL"] = "https://api.xiaomimimo.com/v1"
-os.environ["MODEL"] = "mimo-v2.5-pro"
+os.environ["API_KEY"] = "sk-你的密钥"
+os.environ["BASE_URL"] = "https://api.xiaomimimo.com/v1（可修改成你自己的API地址）"
+os.environ["MODEL"] = "mimo-v2.5-pro（其他厂商的AI数据模型）"
 # =======================================
 
 import uuid, sqlite3
