@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](./法律声明.txt)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://www.luoyeltd.com.cn)
-[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)]()
+[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](./使用说明.txt)
 [![AI](https://img.shields.io/badge/AI-powered-brightgreen.svg)]()
 
 **lorian-ct** 是一款面向学习场景的 AI 错题本工具。  
