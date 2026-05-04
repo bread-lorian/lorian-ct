@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
-import os, sys, io
+import os, sys, io, json
 os.environ['PYTHONIOENCODING'] = 'utf-8'
 if sys.stdout.encoding != 'utf-8':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 if sys.stderr.encoding != 'utf-8':
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
-
-# ======== 在这里填你的 API Key ========
-os.environ["API_KEY"] = "sk-你的密钥"
-os.environ["BASE_URL"] = "https://api.xiaomimimo.com/v1（可修改成你自己的API地址）"
-os.environ["MODEL"] = "mimo-v2.5-pro（其他厂商的AI数据模型）"
-# =======================================
 
 import uuid, sqlite3
 from flask import Flask, render_template, request, jsonify, g
@@ -19,28 +13,48 @@ from openai import OpenAI
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
 
-client = OpenAI(
-    api_key=os.environ["API_KEY"],
-    base_url=os.environ["BASE_URL"],
-)
-MODEL = os.environ["MODEL"]
-DATABASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "notebook.db")
+# ── 配置文件路径 ──────────────────────────────────────
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CONFIG_FILE = os.path.join(BASE_DIR, "config.json")
+DATABASE = os.path.join(BASE_DIR, "notebook.db")
 
-SYSTEM_PROMPT = """## 关于你自己
-- 你是 Lorian-ct，lorian-AI系列助手
+# ── 默认配置 ──────────────────────────────────────────
+DEFAULT_CONFIG = {
+    "api_key": "",
+    "base_url": "https://api.deepseek.com",
+    "model": "deepseek-chat"
+}
+
+# ── 配置读写 ──────────────────────────────────────────
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+            return cfg
+        except:
+            pass
+    return DEFAULT_CONFIG.copy()
+
+def save_config(cfg):
+    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+        json.dump(cfg, f, ensure_ascii=False, indent=2)
+
+def get_ai_client():
+    cfg = load_config()
+    if not cfg.get("api_key"):
+        return None, None
+    client = OpenAI(api_key=cfg["api_key"], base_url=cfg["base_url"])
+    return client, cfg.get("model", "deepseek-chat")
+
+# ── AI 提示词 ──────────────────────────────────────────
+SYSTEM_PROMPT = """你是"lorian-ct"，一位温暖耐心的AI学习辅导伙伴。
+
+## 关于你自己
+- 你叫"lorian-ct"，是 Lorian-ct 项目的AI助手
 - 你由**落雨纪元算法与数据研究中心团队**所开发
 - 你当前是**第一代版本**，属于**测试版本**
 - 当用户问你是谁、谁开发的、这是什么项目时，按以上信息回答
-
-## 核心原则
-- **绝不直接给出正确答案**，引导学生自己发现错误并找到正确解法
-- **每次只引导一步**，循序渐进，不要一次给太多信息
-- **用提问代替讲解**，激发学生主动思考
-
-## 引导流程
-......后面原有的内容全部保留不变......
-
--- 你是“lorian-ct”，一位温暖耐心的AI学习辅导伙伴。
 
 ## 核心原则
 - **绝不直接给出正确答案**，引导学生自己发现错误并找到正确解法
@@ -82,6 +96,7 @@ SYSTEM_PROMPT = """## 关于你自己
 - 题目信息不完整 → 请学生补充
 - 学生答对了 → 热情肯定并总结"""
 
+# ── 数据库 ──────────────────────────────────────────────
 def get_db():
     if "db" not in g:
         g.db = sqlite3.connect(DATABASE)
@@ -117,9 +132,43 @@ def init_db():
         """)
         db.commit()
 
+# ── 路由 ────────────────────────────────────────────────
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/api/config", methods=["GET"])
+def get_config():
+    cfg = load_config()
+    return jsonify({
+        "configured": bool(cfg.get("api_key")),
+        "api_key": cfg.get("api_key", ""),
+        "base_url": cfg.get("base_url", ""),
+        "model": cfg.get("model", "")
+    })
+
+@app.route("/api/config", methods=["POST"])
+def set_config():
+    d = request.json or {}
+    cfg = load_config()
+    cfg["api_key"] = d.get("api_key", cfg.get("api_key", ""))
+    cfg["base_url"] = d.get("base_url", cfg.get("base_url", ""))
+    cfg["model"] = d.get("model", cfg.get("model", ""))
+    save_config(cfg)
+
+    # 测试连接
+    if cfg.get("api_key"):
+        try:
+            client = OpenAI(api_key=cfg["api_key"], base_url=cfg["base_url"])
+            client.chat.completions.create(
+                model=cfg["model"],
+                messages=[{"role": "user", "content": "hi"}],
+                max_tokens=5
+            )
+            return jsonify({"ok": True, "message": "配置成功，AI 连接正常！"})
+        except Exception as e:
+            return jsonify({"ok": False, "message": f"API Key 无法连接：{e}"})
+    return jsonify({"ok": False, "message": "请填写 API Key"})
 
 @app.route("/api/sessions")
 def list_sessions():
@@ -166,6 +215,11 @@ def chat():
     text = (d.get("message") or "").strip()
     if not text:
         return jsonify({"error":"消息不能为空"}), 400
+
+    client, model = get_ai_client()
+    if not client:
+        return jsonify({"error":"请先配置 API Key"}), 400
+
     db = get_db()
     db.execute("INSERT INTO messages (session_id,role,content) VALUES (?,?,?)", (sid,"user",text))
     cnt = db.execute("SELECT COUNT(*) AS c FROM messages WHERE session_id=?", (sid,)).fetchone()["c"]
@@ -178,14 +232,16 @@ def chat():
     for m in history:
         messages.append({"role":m["role"],"content":m["content"]})
     try:
-        resp = client.chat.completions.create(model=MODEL, messages=messages, temperature=0.7, max_tokens=800)
+        resp = client.chat.completions.create(model=model, messages=messages, temperature=0.7, max_tokens=800)
         reply = resp.choices[0].message.content
     except Exception as e:
-        reply = f"AI服务暂时出了点问题，请检查API Key配置。\n\n错误详情：{e}"
+        reply = f"AI服务出了点问题，请检查API配置。\n\n错误详情：{e}"
     db.execute("INSERT INTO messages (session_id,role,content) VALUES (?,?,?)", (sid,"assistant",reply))
     db.execute("UPDATE sessions SET updated_at=datetime('now','localtime') WHERE id=?", (sid,))
     db.commit()
     return jsonify({"message": reply})
+
+# ── 启动 ────────────────────────────────────────────────
 
 if __name__ == "__main__":
     init_db()
