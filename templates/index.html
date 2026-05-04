@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>lorian-ct · AI错题本</title>
+<title>Lorian-ct ·  AI错题本</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@300;400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -26,22 +26,20 @@
 }
 html,body{height:100%;font-family:var(--font);color:var(--text);background:var(--bg);overflow:hidden}
 body{display:flex}
-
 .sidebar{width:var(--sidebar-w);height:100vh;background:var(--sidebar-bg);display:flex;flex-direction:column;flex-shrink:0;transition:transform .3s;z-index:100}
 .sidebar-header{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
 .logo{display:flex;align-items:center;gap:12px}
 .logo-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),#F09060);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff}
 .logo h1{font-size:18px;font-weight:700;color:var(--sidebar-bright)}
 .logo p{font-size:12px;color:var(--sidebar-text);margin-top:2px}
-
 .btn-new{margin:16px 16px 8px;padding:12px 16px;background:rgba(255,255,255,.06);border:1px dashed rgba(255,255,255,.15);border-radius:10px;color:var(--sidebar-bright);font-family:var(--font);font-size:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
 .btn-new:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25)}
 .btn-new span{font-size:18px;font-weight:300}
-
+.btn-settings{margin:0 16px 8px;padding:10px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;color:var(--sidebar-text);font-family:var(--font);font-size:13px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+.btn-settings:hover{background:rgba(255,255,255,.08);color:var(--sidebar-bright)}
 .session-list{flex:1;overflow-y:auto;padding:8px}
 .session-list::-webkit-scrollbar{width:4px}
 .session-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:2px}
-
 .session-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:background .15s;margin-bottom:2px;position:relative}
 .session-item:hover{background:var(--sidebar-hover)}
 .session-item.active{background:var(--sidebar-active)}
@@ -52,20 +50,17 @@ body{display:flex}
 .session-del{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:22px;height:22px;border:none;background:0 0;color:var(--sidebar-text);font-size:16px;cursor:pointer;border-radius:4px;opacity:0;transition:all .15s;display:flex;align-items:center;justify-content:center}
 .session-item:hover .session-del{opacity:1}
 .session-del:hover{background:rgba(232,93,74,.2);color:var(--accent)}
-
 .sub-数学{background:rgba(74,143,231,.15);color:#7AB3F0}
 .sub-物理{background:rgba(139,108,193,.15);color:#B090D8}
 .sub-化学{background:rgba(59,166,118,.15);color:#6BC89A}
 .sub-英语{background:rgba(232,168,56,.15);color:#F0C060}
 .sub-语文{background:rgba(232,93,74,.15);color:#F08070}
 .sub-其他{background:rgba(255,255,255,.08);color:#888}
-
 .main{flex:1;height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
 .screen{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .hidden{display:none!important}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:90}
 .overlay.show{display:block}
-
 #sWelcome{align-items:center;justify-content:center}
 .welcome{text-align:center;max-width:480px;padding:40px 20px;animation:fadeUp .6s ease}
 .welcome-icon{font-size:64px;margin-bottom:24px;animation:breathe 3s ease-in-out infinite}
@@ -78,16 +73,32 @@ body{display:flex}
 .step span:last-child{font-size:14px;color:var(--text-sec)}
 .btn-start{padding:14px 32px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:16px;font-weight:700;cursor:pointer;transition:all .2s}
 .btn-start:hover{background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,93,74,.3)}
-
-#sForm{align-items:center;justify-content:center;padding:20px;overflow-y:auto}
-.form-card{background:var(--card);border-radius:16px;padding:36px;max-width:560px;width:100%;box-shadow:0 4px 16px rgba(0,0,0,.06);animation:fadeUp .4s ease}
-.form-card h2{font-size:22px;margin-bottom:28px;text-align:center}
+#sSettings{align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.settings-card{background:var(--card);border-radius:16px;padding:36px;max-width:560px;width:100%;box-shadow:0 4px 16px rgba(0,0,0,.06);animation:fadeUp .4s ease}
+.settings-card h2{font-size:22px;margin-bottom:8px;text-align:center}
+.settings-card .sub{font-size:14px;color:var(--text-sec);text-align:center;margin-bottom:28px}
 .form-group{margin-bottom:20px}
 .form-group label{display:block;font-size:14px;font-weight:700;color:var(--text-sec);margin-bottom:8px}
-.pills{display:flex;flex-wrap:wrap;gap:8px}
+.form-group input,.form-group select{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:10px;font-family:var(--font);font-size:15px;color:var(--text);background:var(--bg);transition:border-color .2s}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,93,74,.1)}
+.form-group .hint{font-size:12px;color:var(--text-muted);margin-top:6px}
+.form-group .hint a{color:var(--accent);text-decoration:none}
+.provider-pills{display:flex;flex-wrap:wrap;gap:8px}
 .pill{padding:6px 14px;border:1px solid var(--border);border-radius:20px;background:0 0;font-family:var(--font);font-size:13px;color:var(--text-sec);cursor:pointer;transition:all .2s}
 .pill:hover{border-color:var(--accent);color:var(--accent)}
 .pill.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.settings-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:28px}
+.btn-save{padding:12px 28px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-save:hover{background:var(--accent-hover)}
+.btn-skip{padding:12px 20px;border:1px solid var(--border);border-radius:10px;background:0 0;font-family:var(--font);font-size:14px;color:var(--text-sec);cursor:pointer;transition:all .2s}
+.btn-skip:hover{background:var(--bg)}
+.test-result{margin-top:16px;padding:12px 16px;border-radius:10px;font-size:14px;display:none}
+.test-ok{background:var(--green-light);color:var(--green);border:1px solid var(--green)}
+.test-fail{background:var(--accent-light);color:var(--accent);border:1px solid var(--accent)}
+#sForm{align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.form-card{background:var(--card);border-radius:16px;padding:36px;max-width:560px;width:100%;box-shadow:0 4px 16px rgba(0,0,0,.06);animation:fadeUp .4s ease}
+.form-card h2{font-size:22px;margin-bottom:28px;text-align:center}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
 .form-group textarea{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:10px;font-family:var(--font);font-size:15px;color:var(--text);background:var(--bg);resize:vertical;transition:border-color .2s;line-height:1.6}
 .form-group textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,93,74,.1)}
 .form-group textarea::placeholder{color:var(--text-muted)}
@@ -96,7 +107,6 @@ body{display:flex}
 .btn-cancel:hover{background:var(--bg)}
 .btn-submit{padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
 .btn-submit:hover{background:var(--accent-hover)}
-
 #sChat{display:flex;flex-direction:column}
 .chat-header{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.8);backdrop-filter:blur(8px);flex-shrink:0}
 .chat-hdr-l{display:flex;align-items:center;gap:12px}
@@ -113,7 +123,6 @@ body{display:flex}
 .btn-mastered{padding:6px 14px;border:1px solid var(--border);border-radius:8px;background:0 0;font-family:var(--font);font-size:12px;color:var(--text-muted);cursor:pointer;transition:all .2s}
 .btn-mastered:hover{border-color:var(--green);color:var(--green)}
 .btn-mastered.is-m{background:var(--green-light);border-color:var(--green);color:var(--green)}
-
 .chat-msgs{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px}
 .chat-msgs::-webkit-scrollbar{width:6px}
 .chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
@@ -134,13 +143,11 @@ body{display:flex}
 .msg-content ol,.msg-content ul{padding-left:20px;margin:8px 0}
 .msg-content li{margin-bottom:4px}
 .msg-content blockquote{border-left:3px solid var(--accent);padding-left:12px;margin:8px 0;color:var(--text-sec)}
-
 .typing{display:flex;gap:4px;padding:4px 0}
 .typing span{width:8px;height:8px;border-radius:50%;background:var(--text-muted);animation:dotB 1.4s ease-in-out infinite}
 .typing span:nth-child(2){animation-delay:.2s}
 .typing span:nth-child(3){animation-delay:.4s}
 @keyframes dotB{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
-
 .chat-input{display:flex;align-items:flex-end;gap:10px;padding:16px 24px;border-top:1px solid var(--border);background:rgba(255,255,255,.8);backdrop-filter:blur(8px);flex-shrink:0}
 .chat-input textarea{flex:1;padding:10px 16px;border:1px solid var(--border);border-radius:12px;font-family:var(--font);font-size:15px;color:var(--text);background:var(--card);resize:none;max-height:160px;line-height:1.5;transition:border-color .2s}
 .chat-input textarea:focus{outline:none;border-color:var(--accent)}
@@ -148,9 +155,7 @@ body{display:flex}
 .btn-send{width:42px;height:42px;border:none;background:var(--accent);color:#fff;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
 .btn-send:hover{background:var(--accent-hover);transform:scale(1.05)}
 .btn-send:disabled{opacity:.5;cursor:not-allowed;transform:none}
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-
 .mob-btn{display:none;position:fixed;top:12px;left:12px;z-index:200;width:40px;height:40px;border:none;background:var(--card);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.06);font-size:18px;cursor:pointer;align-items:center;justify-content:center}
 @media(max-width:768px){
   .mob-btn{display:flex}
@@ -158,10 +163,9 @@ body{display:flex}
   .sidebar.open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.3)}
   .chat-header{padding-left:56px}
   .welcome h2{font-size:22px}
-  .form-card{padding:24px}
+  .form-card,.settings-card{padding:24px}
   .msg{max-width:95%}
 }
-
 .katex{font-size:1.05em!important}
 </style>
 </head>
@@ -175,6 +179,7 @@ body{display:flex}
     </div>
   </div>
   <button class="btn-new" onclick="showForm()"><span>+</span> 记录新错题</button>
+  <button class="btn-settings" onclick="showSettings()">⚙️ API 设置</button>
   <div class="session-list" id="sList"></div>
 </aside>
 
@@ -182,10 +187,12 @@ body{display:flex}
 <button class="mob-btn" onclick="openSidebar()">☰</button>
 
 <div class="main">
+
+  <!-- Welcome -->
   <div class="screen" id="sWelcome">
     <div class="welcome">
       <div class="welcome-icon">📖</div>
-      <h2>欢迎使用lorian-ct</h2>
+      <h2>lorain-ct · AI错题本</h2>
       <p class="welcome-desc">输入你的错题，我不会直接告诉你答案，<br>而是一步步引导你自己想明白。</p>
       <div class="welcome-steps">
         <div class="step"><span class="step-num">1</span><span>输入错题和你的错误答案</span></div>
@@ -193,9 +200,55 @@ body{display:flex}
         <div class="step"><span class="step-num">3</span><span>通过提问引导你找到正确思路</span></div>
       </div>
       <button class="btn-start" onclick="showForm()">开始纠错 →</button>
+      <div style="margin-top:36px;padding-top:24px;border-top:1px solid var(--border);">
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.8;">
+          此产品由 <strong style="color:var(--text-sec);">落雨纪元</strong> 所开发发行<br>
+          官网: www.luoyeltd.com.cn　｜　博客: blog.luoyeltd.com.cn<br>
+          <span style="font-size:12px;">© 落雨纪元算法与数据研究中心团队 · 第一代测试版</span>
+        </p>
+      </div>
     </div>
   </div>
 
+  <!-- Settings -->
+  <div class="screen hidden" id="sSettings">
+    <div class="settings-card">
+      <h2>⚙️ API 设置</h2>
+      <p class="sub">配置你的 AI 服务，填好后点击保存并测试</p>
+      <div class="form-group">
+        <label>选择服务商</label>
+        <div class="provider-pills" id="providerPills">
+          <button class="pill on" data-url="https://api.deepseek.com" data-model="deepseek-chat" data-hint="DeepSeek" data-reg="https://platform.deepseek.com">DeepSeek</button>
+          <button class="pill" data-url="https://api.xiaomimimo.com/v1" data-model="mimo-v2.5-pro" data-hint="Xiaomi MIMO" data-reg="https://platform.xiaomimimo.com">Xiaomi MIMO</button>
+          <button class="pill" data-url="https://token-plan-cn.xiaomimimo.com/v1" data-model="mimo-v2.5-pro" data-hint="Xiaomi MIMO 会员版" data-reg="https://platform.xiaomimimo.com">Xiaomi MIMO 会员版</button>
+          <button class="pill" data-url="https://dashscope.aliyuncs.com/compatible-mode/v1" data-model="qwen-plus" data-hint="通义千问" data-reg="https://dashscope.console.aliyun.com">通义千问</button>
+          <button class="pill" data-url="https://api.openai.com/v1" data-model="gpt-4o-mini" data-hint="OpenAI" data-reg="https://platform.openai.com">OpenAI</button>
+          <button class="pill" data-url="https://api.moonshot.cn/v1" data-model="moonshot-v1-8k" data-hint="月之暗面 Kimi" data-reg="https://platform.moonshot.cn">月之暗面</button>
+          <button class="pill" data-url="https://open.bigmodel.cn/api/paas/v4" data-model="glm-4-flash" data-hint="智谱AI" data-reg="https://open.bigmodel.cn">智谱AI</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>API Key</label>
+        <input type="password" id="cfgKey" placeholder="sk-xxxxxxxxxxxxxxxx">
+        <p class="hint" id="providerHint">DeepSeek: <a href="https://platform.deepseek.com" target="_blank" id="providerLink">platform.deepseek.com</a> 注册后获取</p>
+      </div>
+      <div class="form-group">
+        <label>API 地址</label>
+        <input type="text" id="cfgUrl" placeholder="https://api.deepseek.com">
+      </div>
+      <div class="form-group">
+        <label>模型名称</label>
+        <input type="text" id="cfgModel" placeholder="deepseek-chat">
+      </div>
+      <div class="test-result" id="testResult"></div>
+      <div class="settings-actions">
+        <button class="btn-skip" onclick="goWelcome()">返回</button>
+        <button class="btn-save" onclick="saveSettings()">保存并测试</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
   <div class="screen hidden" id="sForm">
     <div class="form-card">
       <h2>📝 记录一道新错题</h2>
@@ -225,6 +278,7 @@ body{display:flex}
     </div>
   </div>
 
+  <!-- Chat -->
   <div class="screen hidden" id="sChat">
     <div class="chat-header">
       <div class="chat-hdr-l">
@@ -242,21 +296,83 @@ body{display:flex}
       </button>
     </div>
   </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
 <script>
-const S = { sessions: [], sid: null, subject: '数学', loading: false };
+const S = { sessions: [], sid: null, subject: '数学', loading: false, configured: false };
 
 async function api(method, url, body) {
   const opts = { method, headers: { 'Content-Type': 'application/json' } };
   if (body) opts.body = JSON.stringify(body);
-  const r = await fetch(url, opts);
-  return r.json();
+  return (await fetch(url, opts)).json();
 }
 
+// ── 启动检查配置状态 ──
+async function checkConfig() {
+  const r = await api('GET', '/api/config');
+  S.configured = r.configured;
+  if (!r.configured) {
+    showScreen('sSettings');
+  }
+}
+
+// ── 设置页 ──
+function showSettings() {
+  closeSidebar();
+  api('GET', '/api/config').then(r => {
+    document.getElementById('cfgKey').value = r.api_key || '';
+    document.getElementById('cfgUrl').value = r.base_url || 'https://api.deepseek.com';
+    document.getElementById('cfgModel').value = r.model || 'deepseek-chat';
+  });
+  document.getElementById('testResult').style.display = 'none';
+  showScreen('sSettings');
+}
+
+// ── 切换服务商时更新提示和地址 ──
+document.getElementById('providerPills').addEventListener('click', e => {
+  const p = e.target.closest('.pill');
+  if (!p) return;
+  document.querySelectorAll('#providerPills .pill').forEach(x => x.classList.remove('on'));
+  p.classList.add('on');
+  document.getElementById('cfgUrl').value = p.dataset.url;
+  document.getElementById('cfgModel').value = p.dataset.model;
+  // 更新提示文字和链接
+  const hint = document.getElementById('providerHint');
+  const link = document.getElementById('providerLink');
+  const name = p.dataset.hint;
+  const regUrl = p.dataset.reg;
+  hint.innerHTML = name + ': <a href="' + regUrl + '" target="_blank" id="providerLink">' + regUrl.replace('https://','') + '</a> 注册后获取';
+});
+
+async function saveSettings() {
+  const key = document.getElementById('cfgKey').value.trim();
+  const url = document.getElementById('cfgUrl').value.trim();
+  const model = document.getElementById('cfgModel').value.trim();
+  if (!key) { document.getElementById('cfgKey').focus(); return; }
+  const btn = document.querySelector('.btn-save');
+  btn.textContent = '测试中...';
+  btn.disabled = true;
+  const r = await api('POST', '/api/config', { api_key: key, base_url: url, model: model });
+  const el = document.getElementById('testResult');
+  el.style.display = 'block';
+  if (r.ok) {
+    el.className = 'test-result test-ok';
+    el.textContent = '✅ ' + r.message;
+    S.configured = true;
+    setTimeout(() => goWelcome(), 1500);
+  } else {
+    el.className = 'test-result test-fail';
+    el.textContent = '❌ ' + r.message;
+  }
+  btn.textContent = '保存并测试';
+  btn.disabled = false;
+}
+
+// ── Sessions ──
 async function loadSessions() {
   S.sessions = await api('GET', '/api/sessions');
   renderList();
@@ -265,11 +381,11 @@ async function loadSessions() {
 function renderList() {
   const el = document.getElementById('sList');
   if (!S.sessions.length) {
-    el.innerHTML = '<p style="color:var(--sidebar-text);text-align:center;padding:32px 16px;font-size:13px;">还没有错题记录<br>点击上方按钮开始<br><br>© 落雨纪元.Inc</p>';
+    el.innerHTML = '<p style="color:var(--sidebar-text);text-align:center;padding:32px 16px;font-size:13px;">还没有错题记录<br>点击上方按钮开始</p>';
     return;
   }
   el.innerHTML = S.sessions.map(s => `
-    <div class="session-item ${s.id===S.sid?'active':''}" data-id="${s.id}" onclick="openSession('${s.id}')">
+    <div class="session-item ${s.id===S.sid?'active':''}" onclick="openSession('${s.id}')">
       <span class="session-subject sub-${s.subject}">${s.subject}</span>
       <span class="session-title">${esc(s.title)}</span>
       ${s.mastered ? '<span class="mastered-dot"></span>' : ''}
@@ -278,8 +394,8 @@ function renderList() {
 }
 
 async function delSession(id) {
-  if (!confirm('确定删除这道错题？')) return;
-  await api('DELETE', '/api/sessions/' + id);
+  if (!confirm('确定删除？')) return;
+  await api('DELETE', `/api/sessions/${id}`);
   if (S.sid === id) { S.sid = null; showScreen('sWelcome'); }
   await loadSessions();
 }
@@ -290,6 +406,10 @@ function showScreen(id) {
 }
 
 function showForm() {
+  if (!S.configured) {
+    showSettings();
+    return;
+  }
   closeSidebar();
   showScreen('sForm');
   document.getElementById('inQ').value = '';
@@ -297,9 +417,7 @@ function showForm() {
   document.getElementById('inQ').focus();
 }
 
-function hideForm() {
-  showScreen(S.sid ? 'sChat' : 'sWelcome');
-}
+function hideForm() { showScreen(S.sid ? 'sChat' : 'sWelcome'); }
 
 function goWelcome() {
   S.sid = null;
@@ -317,8 +435,7 @@ async function openSession(id) {
   tag.className = 'sub-tag sub-' + s.subject;
   updMastered(s.mastered);
   showScreen('sChat');
-
-  const msgs = await api('GET', '/api/sessions/' + id + '/messages');
+  const msgs = await api('GET', `/api/sessions/${id}/messages`);
   const el = document.getElementById('cMsgs');
   el.innerHTML = msgs.map(m => msgHTML(m)).join('');
   scrollBottom();
@@ -328,7 +445,7 @@ async function openSession(id) {
 
 async function toggleMastered() {
   if (!S.sid) return;
-  const r = await api('PUT', '/api/sessions/' + S.sid + '/mastered');
+  const r = await api('PUT', `/api/sessions/${S.sid}/mastered`);
   updMastered(r.mastered);
   await loadSessions();
 }
@@ -343,12 +460,9 @@ async function submitQ() {
   const q = document.getElementById('inQ').value.trim();
   const a = document.getElementById('inA').value.trim();
   if (!q) { document.getElementById('inQ').focus(); return; }
-
-  const title = q.slice(0,30) + (q.length>30 ? '...' : '');
-  const s = await api('POST', '/api/sessions', { title: title, subject: S.subject });
+  const s = await api('POST', '/api/sessions', { title: q.slice(0,30)+(q.length>30?'...':''), subject: S.subject });
   S.sid = s.id;
   await loadSessions();
-
   document.getElementById('cTitle').textContent = s.title;
   const tag = document.getElementById('cTag');
   tag.textContent = s.subject;
@@ -356,10 +470,8 @@ async function submitQ() {
   updMastered(0);
   showScreen('sChat');
   renderList();
-
-  let msg = '【题目】\n' + q;
-  if (a) msg += '\n\n【我的错误答案】\n' + a;
-
+  let msg = `【题目】\n${q}`;
+  if (a) msg += `\n\n【我的错误答案】\n${a}`;
   document.getElementById('cMsgs').innerHTML = '';
   appendMsg({ role:'user', content:msg });
   await aiReply(msg);
@@ -382,6 +494,12 @@ async function aiReply(text) {
   try {
     const r = await api('POST', '/api/chat', { session_id: S.sid, message: text });
     hideTyping();
+    if (r.error === '请先配置 API Key') {
+      appendMsg({ role:'assistant', content:'请先点击左侧「API 设置」配置 API Key 后再使用。' });
+      S.loading = false;
+      document.getElementById('cSend').disabled = false;
+      return;
+    }
     appendMsg({ role:'assistant', content:r.message });
     await loadSessions();
   } catch(e) {
@@ -394,11 +512,11 @@ async function aiReply(text) {
 
 function msgHTML(m) {
   const u = m.role === 'user';
-  return '<div class="msg ' + (u?'msg-user':'msg-ai') + '">' +
-    (u ? '' : '<div class="msg-av">🌧️</div>') +
-    '<div class="msg-bubble"><div class="msg-content">' + md(m.content) + '</div></div>' +
-    (u ? '<div class="msg-av">我</div>' : '') +
-  '</div>';
+  return `<div class="msg ${u?'msg-user':'msg-ai'}">
+    ${u?'':'<div class="msg-av">🌧️</div>'}
+    <div class="msg-bubble"><div class="msg-content">${md(m.content)}</div></div>
+    ${u?'<div class="msg-av">我</div>':''}
+  </div>`;
 }
 
 function appendMsg(m) {
@@ -407,20 +525,12 @@ function appendMsg(m) {
   doMath();
 }
 
-function md(t) {
-  try { return marked.parse(t); }
-  catch(e) { return t.replace(/\n/g,'<br>'); }
-}
+function md(t) { try { return marked.parse(t); } catch(e) { return t.replace(/\n/g,'<br>'); } }
 
 function doMath() {
   if (typeof renderMathInElement === 'function') {
     renderMathInElement(document.getElementById('cMsgs'), {
-      delimiters: [
-        {left:'$$',right:'$$',display:true},
-        {left:'$',right:'$',display:false},
-        {left:'\\(',right:'\\)',display:false},
-        {left:'\\[',right:'\\]',display:true}
-      ],
+      delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],
       throwOnError: false
     });
   }
@@ -428,53 +538,35 @@ function doMath() {
 
 function showTyping() {
   document.getElementById('cMsgs').insertAdjacentHTML('beforeend',
-    '<div class="msg msg-ai" id="typingDot"><div class="msg-av">l</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>');
+    `<div class="msg msg-ai" id="typingDot"><div class="msg-av">🌧️</div><div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div></div>`);
   scrollBottom();
 }
+function hideTyping() { const e=document.getElementById('typingDot'); if(e) e.remove(); }
+function scrollBottom() { const c = document.getElementById('cMsgs'); c.scrollTop = c.scrollHeight; }
+function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
 
-function hideTyping() {
-  const e = document.getElementById('typingDot');
-  if (e) e.remove();
-}
-
-function scrollBottom() {
-  const c = document.getElementById('cMsgs');
-  c.scrollTop = c.scrollHeight;
-}
-
-function esc(s) {
-  const d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
-
-document.getElementById('pills').addEventListener('click', function(e) {
+document.getElementById('pills').addEventListener('click', e => {
   const p = e.target.closest('.pill');
   if (!p) return;
-  document.querySelectorAll('#pills .pill').forEach(function(x) { x.classList.remove('on'); });
+  document.querySelectorAll('#pills .pill').forEach(x => x.classList.remove('on'));
   p.classList.add('on');
   S.subject = p.dataset.s;
 });
 
-var cInput = document.getElementById('cInput');
-cInput.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+const cInput = document.getElementById('cInput');
+cInput.addEventListener('keydown', e => {
+  if (e.key==='Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
 });
 cInput.addEventListener('input', function() {
   this.style.height = 'auto';
   this.style.height = Math.min(this.scrollHeight, 160) + 'px';
 });
 
-function openSidebar() {
-  document.getElementById('sidebar').classList.add('open');
-  document.getElementById('overlay').classList.add('show');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('show');
-}
+function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('show'); }
+function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); }
 
 marked.setOptions({ breaks:true, gfm:true });
+checkConfig();
 loadSessions();
 </script>
 </body>
