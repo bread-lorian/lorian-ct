@@ -1,7 +1,7 @@
 # lorian-ct — AI 错题本
 
 [![License](https://img.shields.io/badge/license-Proprietary-red.svg)](./法律声明.txt)
-[![Version](https://img.shields.io/badge/version-Demo 0.0.2-blue.svg)](https://www.luoyeltd.com.cn)
+[![Version](https://img.shields.io/badge/version-0.0.2-blue.svg)](https://www.luoyeltd.com.cn)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)]()
 [![AI](https://img.shields.io/badge/AI-powered-brightgreen.svg)]()
 
