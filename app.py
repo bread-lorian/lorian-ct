@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+#print(sys.executable)
+
 import os, sys, io, json, webbrowser, threading
 os.environ['PYTHONIOENCODING'] = 'utf-8'
 if sys.stdout.encoding != 'utf-8':
@@ -12,10 +14,10 @@ from openai import OpenAI
 
 is_frozen = getattr(sys, 'frozen', False)
 if is_frozen:
-    BASE_DIR = os.path.dirname(sys.executable)
+    BASE_DIR = os.path.dirname(sys.executable)+"/_internal"
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
+#print(BASE_DIR,sys.executable,)
 app = Flask(
     __name__,
     template_folder=os.path.join(BASE_DIR, 'templates'),
