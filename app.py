@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-import os, sys, io, json
+#print(sys.executable)
+
+import os, sys, io, json, webbrowser, threading
 os.environ['PYTHONIOENCODING'] = 'utf-8'
 if sys.stdout.encoding != 'utf-8':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -10,11 +12,20 @@ import uuid, sqlite3
 from flask import Flask, render_template, request, jsonify, g
 from openai import OpenAI
 
-app = Flask(__name__)
+is_frozen = getattr(sys, 'frozen', False)
+if is_frozen:
+    BASE_DIR = os.path.dirname(sys.executable)+"/_internal"
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+#print(BASE_DIR,sys.executable,)
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, 'templates'),
+    static_folder=os.path.join(BASE_DIR, 'static')
+)
 app.config["JSON_AS_ASCII"] = False
 
 # ── 配置文件路径 ──────────────────────────────────────
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_FILE = os.path.join(BASE_DIR, "config.json")
 DATABASE = os.path.join(BASE_DIR, "notebook.db")
 
@@ -278,4 +289,6 @@ if __name__ == "__main__":
     print()
     print("    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
     print()
-    app.run(debug=True, port=5000)
+
+    threading.Timer(1.5, lambda: webbrowser.open("http://localhost:5000")).start()
+    app.run(debug=not is_frozen, port=5000)
